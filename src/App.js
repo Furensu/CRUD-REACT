@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import {  CssBaseline,  withStyles,} from '@material-ui/core';
 
 import AppHeader from './components/AppHeader';
-import Home from './pages/Home';
+import ItemList from './components/ItemList';
 
 const styles = theme => ({
   main: {
@@ -16,7 +16,7 @@ const App = ({ classes }) => (
     <CssBaseline />
     <AppHeader />
     <main className={classes.main}>
-      <Home />
+      <ItemList />
     </main>
   </Fragment>
 );
