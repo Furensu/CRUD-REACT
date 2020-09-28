@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Typography, Grid, TextField, Button,useReducer} from '@material-ui/core';
+import React, {useReducer} from 'react';
+import { Container, Typography, Grid, TextField, Button} from '@material-ui/core';
 
 const initialForm = {
     'item_name': '',
@@ -19,7 +19,7 @@ const CreateForm = ({ toggled }) => {
     const [RequestForm, setRequestForm] = useReducer(reducer, initialForm);
     
     const submitItem = async () =>{
-        
+
     }
 
     return (
