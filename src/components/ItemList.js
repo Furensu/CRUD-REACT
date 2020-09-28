@@ -1,25 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(0, '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-  createData(1, '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(3, '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-  createData(4, '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-];
-
-
 export default function ItemList() {
+
+    const [itemList,setItemList] = useState([]);
+
+    const listItems = async ()=> {
+        const list = await fetch('http://localhost:5000/stock');
+        setItemList( await list.json() );
+    }
+
+    useEffect(()=>{
+        listItems();
+    },[]);
+
   return (
     <React.Fragment>
       <h1>Estoque</h1>
@@ -30,17 +28,15 @@ export default function ItemList() {
             <TableCell>Nome</TableCell>
             <TableCell>Quantidade</TableCell>
             <TableCell>Valor</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+          {itemList.map((item) => (
+            <TableRow key={item.item_id}>
+              <TableCell>{item.item_id}</TableCell>
+              <TableCell>{item.item_name}</TableCell>
+              <TableCell>{item.item_quantity}</TableCell>
+              <TableCell>{item.item_value}</TableCell>
             </TableRow>
           ))}
         </TableBody>
