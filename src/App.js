@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {  CssBaseline,  withStyles,} from '@material-ui/core';
 
 import AppHeader from './components/AppHeader';
 import ItemList from './components/ItemList';
+import CreateForm from './components/CreateForm';
 
 const styles = theme => ({
   main: {
@@ -11,14 +12,22 @@ const styles = theme => ({
   },
 });
 
-const App = ({ classes }) => (
+
+const App = ({ classes }) => {
+  const [toggled,setToggled] = useState(false);
+   
+  const toggleCreate = () => {
+    setToggled(!toggled);
+  };
+ 
+  return (
   <Fragment>
     <CssBaseline />
-    <AppHeader />
+    <AppHeader toggled = {()=>toggleCreate()} />
     <main className={classes.main}>
-      <ItemList />
+      {toggled ? <CreateForm/> : <ItemList/> }
     </main>
   </Fragment>
-);
-
+  );
+  }
 export default withStyles(styles)(App);
