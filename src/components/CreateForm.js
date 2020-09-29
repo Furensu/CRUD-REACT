@@ -17,9 +17,19 @@ const reducer = (state, action) => {
 const CreateForm = ({ toggled }) => {
 
     const [RequestForm, setRequestForm] = useReducer(reducer, initialForm);
-    
-    const submitItem = async () =>{
 
+    const submitItem = async () =>{
+        console.log(RequestForm);
+        // eslint-disable-next-line
+        const item = await fetch('http://localhost:5000/stock', {
+            method:"POST",
+            headers:{
+                "Accept":"application/json",
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify(RequestForm)
+        });
+        toggled();
     }
 
     return (
@@ -35,6 +45,7 @@ const CreateForm = ({ toggled }) => {
                     required
                     id="item_name" 
                     label="Nome do produto"
+                    onChange={(e)=>{let value = e.target.value ;setRequestForm({type:"item_name",  value }) } }
                     fullWidth 
                 />
             </Grid>
@@ -44,6 +55,7 @@ const CreateForm = ({ toggled }) => {
                     required
                     id="item_quantity"
                     label="Quantidade disponivel em estoque"
+                    onChange={(e)=>{let value = parseInt(e.target.value) ;setRequestForm({type:"item_quantity", value }) } }
                     fullWidth
                 />
             </Grid>
@@ -52,11 +64,12 @@ const CreateForm = ({ toggled }) => {
                     required 
                     id="item_value" 
                     label="Valor unitario do item" 
+                    onChange={(e)=>{let value = parseFloat(e.target.value) ;setRequestForm({type:"item_value",  value }) } }
                     fullWidth
                 />
             </Grid>
-            <Grid >
-                <Button variant="contained" color='secondary' onClick={()=>toggled()} >Criar Item</Button>
+            <Grid item xs={12} md={6} >
+                <Button variant="contained" color='secondary' onClick={()=>submitItem()} >Criar Item</Button>
             </Grid>
         </Grid>
         

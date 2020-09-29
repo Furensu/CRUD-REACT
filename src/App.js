@@ -25,7 +25,7 @@ const App = ({ classes }) => {
     <CssBaseline />
     <AppHeader toggled = {()=>toggleCreate()} />
     <main className={classes.main}>
-      {toggled ? <CreateForm/> : <ItemList/> }
+      {toggled ? <CreateForm toggled = {()=>toggleCreate()}/> : <ItemList/> }
     </main>
   </Fragment>
   );
