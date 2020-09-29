@@ -5,6 +5,7 @@ import AppHeader from './components/AppHeader';
 import ItemList from './components/ItemList';
 import CreateForm from './components/CreateForm';
 
+
 const styles = theme => ({
   main: {
     padding: theme.spacing(3),
@@ -14,18 +15,19 @@ const styles = theme => ({
 
 
 const App = ({ classes }) => {
-  const [toggled,setToggled] = useState(false);
-   
-  const toggleCreate = () => {
-    setToggled(!toggled);
+
+  const [toggleCreate,setToggleCreate] = useState(false);
+  
+  const createSwitch = () => {
+    setToggleCreate(!toggleCreate);
   };
- 
+   
   return (
   <Fragment>
     <CssBaseline />
-    <AppHeader toggled = {()=>toggleCreate()} />
+    <AppHeader toggled = {()=>createSwitch()} />
     <main className={classes.main}>
-      {toggled ? <CreateForm toggled = {()=>toggleCreate()}/> : <ItemList/> }
+      {toggleCreate ? <CreateForm toggled = {()=>createSwitch()}/> : <ItemList/> }
     </main>
   </Fragment>
   );
