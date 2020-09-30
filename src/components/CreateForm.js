@@ -19,7 +19,6 @@ const CreateForm = ({ toggled }) => {
     const [RequestForm, setRequestForm] = useReducer(reducer, initialForm);
 
     const submitItem = async () =>{
-        console.log(RequestForm);
         // eslint-disable-next-line
         const item = await fetch('http://localhost:5000/stock', {
             method:"POST",

@@ -1,24 +1,43 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {Table, TableBody, TableCell,TableHead, TableRow, Button, ButtonGroup} from '@material-ui/core'
 import UpdateForm from './UpdateForm';
+import DeleteMessage from './DeleteMessage'
 
 export default function ItemList() {
     
     const [toggleUpdate,setToggleUpdate] = useState(false);
+    const [toggleDialog,setToggleDialog] = useState(false);
     const [currentKey,setCurrentKey] = useState(0);
+    const [currentName,setCurrentName] = useState("");
     const [itemList,setItemList] = useState([]);
 
 
-    const updtClick =(key = 0) => {
+    const updtClick = (key = 0) => {
       setCurrentKey(0);
       setCurrentKey(key);
       setToggleUpdate(!toggleUpdate);
     }
-    const updtClrClick =() => {
+    const updtClrClick = () => {
       setCurrentKey(0);      
       setToggleUpdate(!toggleUpdate);
       listItems();
     }
+    const dialogClick = (key,name) => {
+      setCurrentKey(0);
+      if (toggleUpdate) setToggleUpdate(false);
+      setCurrentKey(key);
+      setCurrentName(name);
+      setToggleDialog(true);
+    }
+    const dialogClear = () => {
+      setCurrentKey(0);
+      setCurrentName("");
+      if (toggleUpdate) setToggleUpdate(false);
+      setToggleDialog(false);
+      listItems();
+    }
+
+    
 
     const listItems = async ()=> {
         const list = await fetch('http://localhost:5000/stock');
@@ -52,7 +71,7 @@ export default function ItemList() {
               <TableCell>
                 <ButtonGroup color="secondary" size="small" >
                   <Button onClick={()=>{updtClick(item.item_id)}}>Editar</Button>
-                  <Button>Excluir</Button>
+                  <Button onClick={()=>{dialogClick(item.item_id,item.item_name)}} >Excluir</Button>
                 </ButtonGroup>
               </TableCell>
             </TableRow>
@@ -60,6 +79,7 @@ export default function ItemList() {
         </TableBody>
       </Table>
       {toggleUpdate && <UpdateForm uId={currentKey} toggled={updtClrClick} />}    
+      <DeleteMessage uId={currentKey} uName={currentName} toggled={toggleDialog} clear={dialogClear}/>
     </Fragment>
   );
 }

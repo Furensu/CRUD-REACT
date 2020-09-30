@@ -1,4 +1,4 @@
-import React, {useReducer,useState, useEffect} from 'react';
+import React, {useReducer,useEffect} from 'react';
 import { Container, Typography, Grid, TextField, Button} from '@material-ui/core';
 
 const initialForm = {
@@ -26,7 +26,7 @@ const UpdateForm = ( {uId, toggled}) => {
     useEffect(()=>{
         getItem();
         
-    },[]);
+    });
 
     const [RequestForm, setRequestForm] = useReducer(reducer, initialForm);
 
